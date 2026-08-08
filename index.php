@@ -11,9 +11,6 @@
         "Login"   => "controllers/Login.php",
         "Logout" => "controllers/Logout.php",
         "Users" => "controllers/Users.php",
-
-        // agrega aquí el resto de tus controllers reales,
-        // con el mismo nombre exacto de la clase y el archivo
     ];
 
     $controller = isset($_REQUEST['c']) ? $_REQUEST['c'] : "Landing";
