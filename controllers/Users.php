@@ -1,8 +1,10 @@
 <?php
     require_once "models/User.php";
 
-    // Ruta de redirección al dashboard, definida una sola vez
+    // Rutas de redirección, definidas una sola vez
     const DASHBOARD_REDIRECT = "Location: ?c=Dashboard";
+    const ROLREAD_REDIRECT   = "Location: ?c=Users&a=rolRead";
+    const USERREAD_REDIRECT  = "Location: ?c=Users&a=userRead";
 
     class Users{
         private $session;
@@ -25,7 +27,7 @@
                     $rol = new User;
                     $rol->setRolName($_POST['rol_name']);
                     $rol->create_rol();
-                    header("Location: ?c=Users&a=rolRead");
+                    header(ROLREAD_REDIRECT);
                 }
             } else {
                 header(DASHBOARD_REDIRECT);
@@ -57,7 +59,7 @@
                     $rolUpdate->setRolCode($_POST['rol_code']);
                     $rolUpdate->setRolName($_POST['rol_name']);
                     $rolUpdate->update_rol();
-                    header("Location: ?c=Users&a=rolRead");
+                    header(ROLREAD_REDIRECT);
                 }
             } else {
                 header(DASHBOARD_REDIRECT);
@@ -69,7 +71,7 @@
             if ($this->session == 'admin') {
                 $rol = new User;
                 $rol->delete_rol($_GET['idRol']);
-                header("Location: ?c=Users&a=rolRead");
+                header(ROLREAD_REDIRECT);
             } else {
                 header(DASHBOARD_REDIRECT);
             }
@@ -95,7 +97,7 @@
                         $_POST['user_state']
                     );
                     $user->create_user();
-                    header("Location: ?c=Users&a=userRead");
+                    header(USERREAD_REDIRECT);
                 }
             } else {
                 header(DASHBOARD_REDIRECT);
@@ -137,7 +139,7 @@
                         $_POST['user_state']
                     );
                     $userUpdate->update_user();
-                    header("Location: ?c=Users&a=userRead");
+                    header(USERREAD_REDIRECT);
                 }
             } else {
                 header(DASHBOARD_REDIRECT);
@@ -149,7 +151,7 @@
             if ($this->session == 'admin') {
                 $user = new User;
                 $user->delete_user($_GET['idUser']);
-                header("Location: ?c=Users&a=userRead");
+                header(USERREAD_REDIRECT);
             } else {
                 header(DASHBOARD_REDIRECT);
             }
