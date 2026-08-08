@@ -1,5 +1,9 @@
 <?php
     require_once "models/User.php";
+
+    // Ruta de redirección al dashboard, definida una sola vez
+    const DASHBOARD_REDIRECT = "Location: ?c=Dashboard";
+
     class Users{
         private $session;
         public function __construct(){
@@ -8,7 +12,7 @@
 
         // Controlador Principal
         public function main(){
-            header("Location: ?c=Dashboard");
+            header(DASHBOARD_REDIRECT);
         }
 
         // Controlador Crear Rol
@@ -24,7 +28,7 @@
                     header("Location: ?c=Users&a=rolRead");
                 }
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
 
         }
@@ -36,7 +40,7 @@
                 $roles = $roles->read_roles();
                 require_once "views/modules/users/rol_read.view.php";
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
 
@@ -56,7 +60,7 @@
                     header("Location: ?c=Users&a=rolRead");
                 }
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
 
@@ -67,7 +71,7 @@
                 $rol->delete_rol($_GET['idRol']);
                 header("Location: ?c=Users&a=rolRead");
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
 
@@ -94,7 +98,7 @@
                     header("Location: ?c=Users&a=userRead");
                 }
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
 
@@ -106,7 +110,7 @@
                 $users = $users->read_users();
                 require_once "views/modules/users/user_read.view.php";
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
 
@@ -136,7 +140,7 @@
                     header("Location: ?c=Users&a=userRead");
                 }
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
 
@@ -147,7 +151,7 @@
                 $user->delete_user($_GET['idUser']);
                 header("Location: ?c=Users&a=userRead");
             } else {
-                header("Location: ?c=Dashboard");
+                header(DASHBOARD_REDIRECT);
             }
         }
     }
