@@ -1,12 +1,16 @@
 <?php
     require_once "models/User.php";
+
+    // Ruta de la vista de login, definida una sola vez
+    const LOGIN_VIEW = "views/company/login.view.php";
+
     class Login{
         // Controlador Principal
         public function main(){
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 if (empty($_SESSION['session'])) {
                     $message = "";
-                    require_once "views/company/login.view.php";
+                    require_once LOGIN_VIEW;
                 } else {
                     header("Location:?c=Dashboard");
                 }
@@ -25,11 +29,11 @@
                         header("Location:?c=Dashboard");
                     } else {
                         $message = "El Usuario NO está activo";
-                        require_once "views/company/login.view.php";
+                        require_once LOGIN_VIEW;
                     }
                 } else {
                     $message = "Credenciales incorrectas ó el Usuario NO existe";
-                    require_once "views/company/login.view.php";
+                    require_once LOGIN_VIEW;
                 }
             }
 
