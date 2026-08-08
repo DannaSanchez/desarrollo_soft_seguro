@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `db_inventory`.`USERS` (
   `user_lastname` VARCHAR(100) NOT NULL,
   `user_id` VARCHAR(20) NOT NULL,
   `user_email` VARCHAR(100) NOT NULL,
-  `user_pass` VARCHAR(200) NOT NULL,
+  `user_pass` VARCHAR(250) NOT NULL,
   `user_state` TINYINT NOT NULL,
   PRIMARY KEY (`user_code`),
   INDEX `ind_users_roles` (`rol_code` ASC),

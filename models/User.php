@@ -131,6 +131,9 @@
         # RF01_CU01 - Iniciar Sesión
         public function login(){
             try {
+                // Ya no filtramos por user_pass en el SQL: password_hash()
+                // genera un hash distinto cada vez, así que no se puede comparar
+                // directamente en el WHERE. Buscamos solo por email.
                 $sql = 'SELECT
                             r.rol_code,
                             r.rol_name,
@@ -144,13 +147,14 @@
                         FROM ROLES AS r
                         INNER JOIN USERS AS u
                         on r.rol_code = u.rol_code
-                        WHERE user_email = :userEmail AND user_pass = :userPass';
+                        WHERE user_email = :userEmail';
                 $stmt = $this->dbh->prepare($sql);
                 $stmt->bindValue('userEmail', $this->getUserEmail());
-                $stmt->bindValue('userPass', sha1($this->getUserPass()));
                 $stmt->execute();
                 $userDb = $stmt->fetch();
-                if ($userDb) {
+
+                // Verificamos la contraseña ingresada contra el hash guardado
+                if ($userDb && password_verify($this->getUserPass(), $userDb['user_pass'])) {
                     $user = new User(
                         $userDb['rol_code'],
                         $userDb['rol_name'],
@@ -267,7 +271,7 @@
                 $stmt->bindValue('userLastName', $this->getUserLastName());
                 $stmt->bindValue('userId', $this->getUserId());
                 $stmt->bindValue('userEmail', $this->getUserEmail());
-                $stmt->bindValue('userPass', sha1($this->getUserPass()));
+                $stmt->bindValue('userPass', password_hash($this->getUserPass(), PASSWORD_DEFAULT));
                 $stmt->bindValue('userState', $this->getUserState());
                 $stmt->execute();
             } catch (Exception $e) {
@@ -371,7 +375,7 @@
                 $stmt->bindValue('userLastName', $this->getUserLastName());
                 $stmt->bindValue('userId', $this->getUserId());
                 $stmt->bindValue('userEmail', $this->getUserEmail());
-                $stmt->bindValue('userPass', sha1($this->getUserPass()));
+                $stmt->bindValue('userPass', password_hash($this->getUserPass(), PASSWORD_DEFAULT));
                 $stmt->bindValue('userState', $this->getUserState());
                 $stmt->execute();
             } catch (Exception $e) {
