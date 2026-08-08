@@ -12,7 +12,7 @@
         "Users" => "controllers/Users.php",
     ];
 
-    // Lista blanca de acciones permitidas POR CADA controller
+    // Lista blanca de acciones permitidas por cada controller
     $actions_permitidas = [
         "Dashboard" => ["main"],
         "Landing"   => ["main"],
@@ -22,36 +22,40 @@
                          "userCreate", "userRead", "userUpdate", "userDelete"],
     ];
 
-    $controller = isset($_REQUEST['c']) ? $_REQUEST['c'] : "Landing";
+    // Valor crudo, sin validar (solo se usa para buscar en la lista blanca)
+    $controller_solicitado = isset($_REQUEST['c']) ? $_REQUEST['c'] : "Landing";
 
-    if (!array_key_exists($controller, $controllers_permitidos)) {
-        $controller = "Landing";
+    if (!array_key_exists($controller_solicitado, $controllers_permitidos)) {
+        $controller_solicitado = "Landing";
     }
 
-    $route_controller = $controllers_permitidos[$controller];
+    // A partir de aquí, $nombre_controller es un valor 100% controlado por el código,
+    // nunca directamente por el usuario
+    $nombre_controller = $controller_solicitado;
+    $route_controller = $controllers_permitidos[$nombre_controller];
 
     if (file_exists($route_controller)) {
-        $view = $controller;
+        $view = $nombre_controller;
         require_once $route_controller;
-        $controllerObj = new $controller;
+        $controllerObj = new $nombre_controller();
 
-        // La acción solicitada solo se acepta si está en la lista blanca
-        // definida para ESE controller específico
-        $action = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'main';
-        if (!in_array($action, $actions_permitidas[$controller], true)) {
-            $action = 'main';
+        // Valor crudo, sin validar (solo se usa para buscar en la lista blanca)
+        $action_solicitada = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'main';
+        if (!in_array($action_solicitada, $actions_permitidas[$nombre_controller], true)) {
+            $action_solicitada = 'main';
         }
+        $accion = $action_solicitada;
 
         if ($view === 'Landing' || $view === 'Login') {
             require_once "views/company/header.view.php";
-            call_user_func(array($controllerObj, $action));
+            call_user_func(array($controllerObj, $accion));
             require_once "views/company/footer.view.php";
         } elseif (!empty($_SESSION['session'])) {
             require_once "models/User.php";
             $profile = unserialize($_SESSION['profile']);
             $session = $_SESSION['session'];
             require_once "views/roles/".$session."/header.view.php";
-            call_user_func(array($controllerObj, $action));
+            call_user_func(array($controllerObj, $accion));
             require_once "views/roles/".$session."/footer.view.php";
         } else {
             header("Location:?");
