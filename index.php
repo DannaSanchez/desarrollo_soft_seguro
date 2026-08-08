@@ -3,65 +3,88 @@
     session_start();
     require_once "models/DataBase.php";
 
-    // Lista blanca de controllers válidos
-    $controllers_permitidos = [
-        "Dashboard" => "controllers/Dashboard.php",
-        "Landing" => "controllers/Landing.php",
-        "Login"   => "controllers/Login.php",
-        "Logout" => "controllers/Logout.php",
-        "Users" => "controllers/Users.php",
-    ];
-
-    // Lista blanca de acciones permitidas por cada controller
-    $actions_permitidas = [
-        "Dashboard" => ["main"],
-        "Landing"   => ["main"],
-        "Login"     => ["main"],
-        "Logout"    => ["main"],
-        "Users"     => ["main", "rolCreate", "rolRead", "rolUpdate", "rolDelete",
-                         "userCreate", "userRead", "userUpdate", "userDelete"],
-    ];
-
-    // Valor crudo, sin validar (solo se usa para buscar en la lista blanca)
     $controller_solicitado = isset($_REQUEST['c']) ? $_REQUEST['c'] : "Landing";
+    $action_solicitada = isset($_REQUEST['a']) ? $_REQUEST['a'] : "main";
 
-    if (!array_key_exists($controller_solicitado, $controllers_permitidos)) {
-        $controller_solicitado = "Landing";
+    switch ($controller_solicitado) {
+        case "Dashboard":
+            require_once "controllers/Dashboard.php";
+            $controllerObj = new Dashboard();
+            $view = "Dashboard";
+            break;
+        case "Login":
+            require_once "controllers/Login.php";
+            $controllerObj = new Login();
+            $view = "Login";
+            break;
+        case "Logout":
+            require_once "controllers/Logout.php";
+            $controllerObj = new Logout();
+            $view = "Logout";
+            break;
+        case "Users":
+            require_once "controllers/Users.php";
+            $controllerObj = new Users();
+            $view = "Users";
+            break;
+        case "Landing":
+        default:
+            require_once "controllers/Landing.php";
+            $controllerObj = new Landing();
+            $view = "Landing";
+            break;
     }
 
-    // A partir de aquí, $nombre_controller es un valor 100% controlado por el código,
-    // nunca directamente por el usuario
-    $nombre_controller = $controller_solicitado;
-    $route_controller = $controllers_permitidos[$nombre_controller];
-
-    if (file_exists($route_controller)) {
-        $view = $nombre_controller;
-        require_once $route_controller;
-        $controllerObj = new $nombre_controller();
-
-        // Valor crudo, sin validar (solo se usa para buscar en la lista blanca)
-        $action_solicitada = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'main';
-        if (!in_array($action_solicitada, $actions_permitidas[$nombre_controller], true)) {
-            $action_solicitada = 'main';
-        }
-        $accion = $action_solicitada;
-
-        if ($view === 'Landing' || $view === 'Login') {
-            require_once "views/company/header.view.php";
-            call_user_func(array($controllerObj, $accion));
-            require_once "views/company/footer.view.php";
-        } elseif (!empty($_SESSION['session'])) {
-            require_once "models/User.php";
-            $profile = unserialize($_SESSION['profile']);
-            $session = $_SESSION['session'];
-            require_once "views/roles/".$session."/header.view.php";
-            call_user_func(array($controllerObj, $accion));
-            require_once "views/roles/".$session."/footer.view.php";
-        } else {
-            header("Location:?");
-        }
+    if ($view === 'Landing' || $view === 'Login') {
+        require_once "views/company/header.view.php";
+        ejecutar_accion($controllerObj, $view, $action_solicitada);
+        require_once "views/company/footer.view.php";
+    } elseif (!empty($_SESSION['session'])) {
+        require_once "models/User.php";
+        $profile = unserialize($_SESSION['profile']);
+        $session = $_SESSION['session'];
+        require_once "views/roles/".$session."/header.view.php";
+        ejecutar_accion($controllerObj, $view, $action_solicitada);
+        require_once "views/roles/".$session."/footer.view.php";
     } else {
         header("Location:?");
     }
     ob_end_flush();
+
+    function ejecutar_accion($controllerObj, $view, $action){
+        switch ($view) {
+            case "Dashboard":
+                $controllerObj->main();
+                break;
+
+            case "Landing":
+                $controllerObj->main();
+                break;
+
+            case "Login":
+                $controllerObj->main();
+                break;
+
+            case "Logout":
+                $controllerObj->main();
+                break;
+
+            case "Users":
+                switch ($action) {
+                    case "rolCreate":  $controllerObj->rolCreate();  break;
+                    case "rolRead":    $controllerObj->rolRead();    break;
+                    case "rolUpdate":  $controllerObj->rolUpdate();  break;
+                    case "rolDelete":  $controllerObj->rolDelete();  break;
+                    case "userCreate": $controllerObj->userCreate(); break;
+                    case "userRead":   $controllerObj->userRead();   break;
+                    case "userUpdate": $controllerObj->userUpdate(); break;
+                    case "userDelete": $controllerObj->userDelete(); break;
+                    case "main":
+                    default:
+                        $controllerObj->main();
+                        break;
+                }
+                break;
+        }
+    }
 ?>
