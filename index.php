@@ -1,7 +1,6 @@
 <?php
     ob_start();
     session_start();
-    // session_destroy();
     require_once "models/DataBase.php";
 
     // Lista blanca de controllers válidos
