@@ -3,8 +3,27 @@
     session_start();
     // session_destroy();
     require_once "models/DataBase.php";
+
+    // Lista blanca de controllers válidos
+    $controllers_permitidos = [
+        "Dashboard" => "controllers/Dashboard.php",
+        "Landing" => "controllers/Landing.php",
+        "Login"   => "controllers/Login.php",
+        "Logout" => "controllers/Logout.php",
+        "Users" => "controllers/Users.php",
+
+        // agrega aquí el resto de tus controllers reales,
+        // con el mismo nombre exacto de la clase y el archivo
+    ];
+
     $controller = isset($_REQUEST['c']) ? $_REQUEST['c'] : "Landing";
-    $route_controller = "controllers/" . $controller . ".php";
+
+    if (!array_key_exists($controller, $controllers_permitidos)) {
+        $controller = "Landing";
+    }
+
+    $route_controller = $controllers_permitidos[$controller];
+
     if (file_exists($route_controller)) {
         $view = $controller;
         require_once $route_controller;
