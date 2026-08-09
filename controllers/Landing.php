@@ -4,4 +4,3 @@
             require_once "views/company/index.view.php";
         }
     }
-?>

@@ -6,4 +6,3 @@ class Dashboard{
         require_once "views/roles/".$session."/". $session.".view.php";
     }
 }
-?>
