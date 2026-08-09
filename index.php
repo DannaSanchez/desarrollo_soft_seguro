@@ -85,6 +85,12 @@
                         break;
                 }
                 break;
+
+            default:
+                // No debería ocurrir, ya que $view viene validado desde el switch anterior,
+                // pero se maneja explícitamente por seguridad y buenas prácticas.
+                header("Location:?");
+                break;
         }
     }
 ?>
