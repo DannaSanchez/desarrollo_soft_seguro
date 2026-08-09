@@ -16,10 +16,10 @@
                 }
             }
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $profile = new User(
-                    $_POST['user_email'],
-                    $_POST['user_pass']
-                );
+                $profile = new User([
+                    'user_email' => $_POST['user_email'],
+                    'user_pass'  => $_POST['user_pass']
+                ]);
                 $profile = $profile->login();
                 if ($profile) {
                     $active = $profile->getUserState();

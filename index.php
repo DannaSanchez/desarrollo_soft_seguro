@@ -37,21 +37,21 @@
 
     if ($view === 'Landing' || $view === 'Login') {
         require_once "views/company/header.view.php";
-        ejecutar_accion($controllerObj, $view, $action_solicitada);
+        ejecutarAccion($controllerObj, $view, $action_solicitada);
         require_once "views/company/footer.view.php";
     } elseif (!empty($_SESSION['session'])) {
         require_once "models/User.php";
         $profile = unserialize($_SESSION['profile']);
         $session = $_SESSION['session'];
         require_once "views/roles/".$session."/header.view.php";
-        ejecutar_accion($controllerObj, $view, $action_solicitada);
+        ejecutarAccion($controllerObj, $view, $action_solicitada);
         require_once "views/roles/".$session."/footer.view.php";
     } else {
         header("Location:?");
     }
     ob_end_flush();
 
-    function ejecutar_accion($controllerObj, $view, $action){
+    function ejecutarAccion($controllerObj, $view, $action){
         switch ($view) {
             case "Dashboard":
                 $controllerObj->main();
