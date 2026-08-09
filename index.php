@@ -42,6 +42,15 @@
     } elseif (!empty($_SESSION['session'])) {
         require_once "models/User.php";
         $profile = unserialize($_SESSION['profile']);
+
+        // Si la sesión quedó corrupta o incompatible con la clase User actual,
+        // se destruye y se redirige al login en vez de dejar que truene un error fatal
+        if (!($profile instanceof User)) {
+            session_destroy();
+            header("Location:?");
+            exit;
+        }
+
         $session = $_SESSION['session'];
         require_once "views/roles/".$session."/header.view.php";
         ejecutarAccion($controllerObj, $view, $action_solicitada);
@@ -87,8 +96,6 @@
                 break;
 
             default:
-                // No debería ocurrir, ya que $view viene validado desde el switch anterior,
-                // pero se maneja explícitamente por seguridad y buenas prácticas.
                 header("Location:?");
                 break;
         }
