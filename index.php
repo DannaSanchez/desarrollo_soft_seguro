@@ -3,6 +3,9 @@
     session_start();
     require_once "models/DataBase.php";
 
+    // Ruta de redirección al home, definida una sola vez
+    const HOME_REDIRECT = "Location:?";
+
     $controller_solicitado = isset($_REQUEST['c']) ? $_REQUEST['c'] : "Landing";
     $action_solicitada = isset($_REQUEST['a']) ? $_REQUEST['a'] : "main";
 
@@ -47,7 +50,7 @@
         // se destruye y se redirige al login en vez de dejar que truene un error fatal
         if (!($profile instanceof User)) {
             session_destroy();
-            header("Location:?");
+            header(HOME_REDIRECT);
             exit;
         }
 
@@ -56,7 +59,7 @@
         ejecutarAccion($controllerObj, $view, $action_solicitada);
         require_once "views/roles/".$session."/footer.view.php";
     } else {
-        header("Location:?");
+        header(HOME_REDIRECT);
     }
     ob_end_flush();
 
@@ -96,7 +99,7 @@
                 break;
 
             default:
-                header("Location:?");
+                header(HOME_REDIRECT);
                 break;
         }
     }
