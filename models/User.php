@@ -2,15 +2,15 @@
     class User{
         // 1ra Parte: Atributos
         private $dbh;
-        private $rol_code;
-        private $rol_name;
-        private $user_code;
-        private $user_name;
-        private $user_lastname;
-        private $user_id;
-        private $user_email;
-        private $user_pass;
-        private $user_state;
+        private $rolCode;
+        private $rolName;
+        private $userCode;
+        private $userName;
+        private $userLastName;
+        private $userId;
+        private $userEmail;
+        private $userPass;
+        private $userState;
 
         // 2da Parte: Sobrecarga Constructores
         public function __construct(){
@@ -30,100 +30,100 @@
         public function __construct0(){}
 
         # Constructor: Objeto 02 parámetros
-        public function __construct2($user_email,$user_pass){
-            $this->user_email = $user_email;
-            $this->user_pass = $user_pass;
+        public function __construct2($userEmail,$userPass){
+            $this->userEmail = $userEmail;
+            $this->userPass = $userPass;
         }
 
         # Constructor: Objeto 08 parámetros
-        public function __construct8($rol_code,$user_code,$user_name,$user_lastname,$user_id,$user_email,$user_pass,$user_state){
-            $this->rol_code = $rol_code;
-            $this->user_code = $user_code;
-            $this->user_name = $user_name;
-            $this->user_lastname = $user_lastname;
-            $this->user_id = $user_id;
-            $this->user_email = $user_email;
-            $this->user_pass = $user_pass;
-            $this->user_state = $user_state;
+        public function __construct8($rolCode,$userCode,$userName,$userLastName,$userId,$userEmail,$userPass,$userState){
+            $this->rolCode = $rolCode;
+            $this->userCode = $userCode;
+            $this->userName = $userName;
+            $this->userLastName = $userLastName;
+            $this->userId = $userId;
+            $this->userEmail = $userEmail;
+            $this->userPass = $userPass;
+            $this->userState = $userState;
         }
 
         # Constructor: Objeto 09 parámetros
-        public function __construct9($rol_code,$rol_name,$user_code,$user_name,$user_lastname,$user_id,$user_email,$user_pass,$user_state){
+        public function __construct9($rolCode,$rolName,$userCode,$userName,$userLastName,$userId,$userEmail,$userPass,$userState){
             unset($this->dbh);
-            $this->rol_code = $rol_code;
-            $this->rol_name = $rol_name;
-            $this->user_code = $user_code;
-            $this->user_name = $user_name;
-            $this->user_lastname = $user_lastname;
-            $this->user_id = $user_id;
-            $this->user_email = $user_email;
-            $this->user_pass = $user_pass;
-            $this->user_state = $user_state;
+            $this->rolCode = $rolCode;
+            $this->rolName = $rolName;
+            $this->userCode = $userCode;
+            $this->userName = $userName;
+            $this->userLastName = $userLastName;
+            $this->userId = $userId;
+            $this->userEmail = $userEmail;
+            $this->userPass = $userPass;
+            $this->userState = $userState;
         }
 
         // 3ra Parte: Setter y Getters
         # Código Rol (se conserva solo como dato informativo del usuario, no gestiona roles)
-        public function setRolCode($rol_code){
-            $this->rol_code = $rol_code;
+        public function setRolCode($rolCode){
+            $this->rolCode = $rolCode;
         }
         public function getRolCode(){
-            return $this->rol_code;
+            return $this->rolCode;
         }
         # Nombre Rol (idem, solo lectura para mostrar junto al usuario)
-        public function setRolName($rol_name){
-            $this->rol_name = $rol_name;
+        public function setRolName($rolName){
+            $this->rolName = $rolName;
         }
         public function getRolName(){
-            return $this->rol_name;
+            return $this->rolName;
         }
         # Código Usuario
-        public function setUserCode($user_code){
-            $this->user_code = $user_code;
+        public function setUserCode($userCode){
+            $this->userCode = $userCode;
         }
         public function getUserCode(){
-            return $this->user_code;
+            return $this->userCode;
         }
         # Nombre Usuario
-        public function setUserName($user_name){
-            $this->user_name = $user_name;
+        public function setUserName($userName){
+            $this->userName = $userName;
         }
         public function getUserName(){
-            return $this->user_name;
+            return $this->userName;
         }
         # Apellido Usuario
-        public function setUserLastName($user_lastname){
-            $this->user_lastname = $user_lastname;
+        public function setUserLastName($userLastName){
+            $this->userLastName = $userLastName;
         }
         public function getUserLastName(){
-            return $this->user_lastname;
+            return $this->userLastName;
         }
         # Identificación Usuario
-        public function setUserId($user_id){
-            $this->user_id = $user_id;
+        public function setUserId($userId){
+            $this->userId = $userId;
         }
         public function getUserId(){
-            return $this->user_id;
+            return $this->userId;
         }
         # Email Usuario
-        public function setUserEmail($user_email){
-            $this->user_email = $user_email;
+        public function setUserEmail($userEmail){
+            $this->userEmail = $userEmail;
         }
         public function getUserEmail(){
-            return $this->user_email;
+            return $this->userEmail;
         }
         # Contraseña Usuario
-        public function setUserPass($user_pass){
-            $this->user_pass = $user_pass;
+        public function setUserPass($userPass){
+            $this->userPass = $userPass;
         }
         public function getUserPass(){
-            return $this->user_pass;
+            return $this->userPass;
         }
         # Estado Usuario
-        public function setUserState($user_state){
-            $this->user_state = $user_state;
+        public function setUserState($userState){
+            $this->userState = $userState;
         }
         public function getUserState(){
-            return $this->user_state;
+            return $this->userState;
         }
 
         // 4ta Parte: Persistencia a la Base de Datos
@@ -132,35 +132,35 @@
         public function login(){
             try {
                 $sql = 'SELECT
-                            r.rol_code,
-                            r.rol_name,
-                            user_code,
-                            user_name,
-                            user_lastname,
-                            user_id,
-                            user_email,
-                            user_pass,
-                            user_state
+                            r.rolCode,
+                            r.rolName,
+                            userCode,
+                            userName,
+                            userLastName,
+                            userId,
+                            userEmail,
+                            userPass,
+                            userState
                         FROM ROLES AS r
                         INNER JOIN USERS AS u
-                        on r.rol_code = u.rol_code
-                        WHERE user_email = :userEmail';
+                        on r.rolCode = u.rolCode
+                        WHERE userEmail = :userEmail';
                 $stmt = $this->dbh->prepare($sql);
                 $stmt->bindValue('userEmail', $this->getUserEmail());
                 $stmt->execute();
                 $userDb = $stmt->fetch();
 
-                if ($userDb && password_verify($this->getUserPass(), $userDb['user_pass'])) {
+                if ($userDb && password_verify($this->getUserPass(), $userDb['userPass'])) {
                     $user = new User(
-                        $userDb['rol_code'],
-                        $userDb['rol_name'],
-                        $userDb['user_code'],
-                        $userDb['user_name'],
-                        $userDb['user_lastname'],
-                        $userDb['user_id'],
-                        $userDb['user_email'],
-                        $userDb['user_pass'],
-                        $userDb['user_state']
+                        $userDb['rolCode'],
+                        $userDb['rolName'],
+                        $userDb['userCode'],
+                        $userDb['userName'],
+                        $userDb['userLastName'],
+                        $userDb['userId'],
+                        $userDb['userEmail'],
+                        $userDb['userPass'],
+                        $userDb['userState']
                     );
                     return $user;
                 } else {
@@ -204,30 +204,30 @@
             try {
                 $userList = [];
                 $sql = 'SELECT
-                            r.rol_code,
-                            r.rol_name,
-                            user_code,
-                            user_name,
-                            user_lastname,
-                            user_id,
-                            user_email,
-                            user_pass,
-                            user_state
+                            r.rolCode,
+                            r.rolName,
+                            userCode,
+                            userName,
+                            userLastName,
+                            userId,
+                            userEmail,
+                            userPass,
+                            userState
                         FROM ROLES AS r
                         INNER JOIN USERS AS u
-                        on r.rol_code = u.rol_code';
+                        on r.rolCode = u.rolCode';
                 $stmt = $this->dbh->query($sql);
                 foreach ($stmt->fetchAll() as $user) {
                     $userObj = new User(
-                        $user['rol_code'],
-                        $user['rol_name'],
-                        $user['user_code'],
-                        $user['user_name'],
-                        $user['user_lastname'],
-                        $user['user_id'],
-                        $user['user_email'],
-                        $user['user_pass'],
-                        $user['user_state']
+                        $user['rolCode'],
+                        $user['rolName'],
+                        $user['userCode'],
+                        $user['userName'],
+                        $user['userLastName'],
+                        $user['userId'],
+                        $user['userEmail'],
+                        $user['userPass'],
+                        $user['userState']
                     );
                     array_push($userList, $userObj);
                 }
@@ -241,33 +241,33 @@
         public function getuser_bycode($userCode){
             try {
                 $sql = 'SELECT
-                            r.rol_code,
-                            r.rol_name,
-                            user_code,
-                            user_name,
-                            user_lastname,
-                            user_id,
-                            user_email,
-                            user_pass,
-                            user_state
+                            r.rolCode,
+                            r.rolName,
+                            userCode,
+                            userName,
+                            userLastName,
+                            userId,
+                            userEmail,
+                            userPass,
+                            userState
                         FROM ROLES AS r
                         INNER JOIN USERS AS u
-                        on r.rol_code = u.rol_code
-                        WHERE user_code=:userCode';
+                        on r.rolCode = u.rolCode
+                        WHERE userCode=:userCode';
                 $stmt = $this->dbh->prepare($sql);
                 $stmt->bindValue('userCode', $userCode);
                 $stmt->execute();
                 $userDb = $stmt->fetch();
                 $user = new User(
-                    $userDb['rol_code'],
-                    $userDb['rol_name'],
-                    $userDb['user_code'],
-                    $userDb['user_name'],
-                    $userDb['user_lastname'],
-                    $userDb['user_id'],
-                    $userDb['user_email'],
-                    $userDb['user_pass'],
-                    $userDb['user_state']
+                    $userDb['rolCode'],
+                    $userDb['rolName'],
+                    $userDb['userCode'],
+                    $userDb['userName'],
+                    $userDb['userLastName'],
+                    $userDb['userId'],
+                    $userDb['userEmail'],
+                    $userDb['userPass'],
+                    $userDb['userState']
                 );
                 return $user;
             } catch (Exception $e) {
@@ -279,15 +279,15 @@
         public function update_user(){
             try {
                 $sql = 'UPDATE USERS SET
-                            rol_code = :rolCode,
-                            user_code = :userCode,
-                            user_name = :userName,
-                            user_lastname = :userLastName,
-                            user_id = :userId,
-                            user_email = :userEmail,
-                            user_pass = :userPass,
-                            user_state = :userState
-                        WHERE user_code = :userCode';
+                            rolCode = :rolCode,
+                            userCode = :userCode,
+                            userName = :userName,
+                            userLastName = :userLastName,
+                            userId = :userId,
+                            userEmail = :userEmail,
+                            userPass = :userPass,
+                            userState = :userState
+                        WHERE userCode = :userCode';
                 $stmt = $this->dbh->prepare($sql);
                 $stmt->bindValue('rolCode', $this->getRolCode());
                 $stmt->bindValue('userCode', $this->getUserCode());
@@ -306,7 +306,7 @@
         # RF12_CU12 - Eliminar Usuario
         public function delete_user($userCode){
             try {
-                $sql = 'DELETE FROM USERS WHERE user_code = :userCode';
+                $sql = 'DELETE FROM USERS WHERE userCode = :userCode';
                 $stmt = $this->dbh->prepare($sql);
                 $stmt->bindValue('userCode', $userCode);
                 $stmt->execute();
