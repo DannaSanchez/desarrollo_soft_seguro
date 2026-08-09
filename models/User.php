@@ -84,7 +84,7 @@
         }
 
         # RF08_CU08 - Registrar Usuario
-        public function create_user(){
+        public function createUser(){
             try {
                 $sql = 'INSERT INTO USERS VALUES (
                             :rolCode,
@@ -112,7 +112,7 @@
         }
 
         # RF09_CU09 - Consultar Usuarios
-        public function read_users(){
+        public function readUsers(){
             try {
                 $userList = [];
                 $sql = 'SELECT
@@ -139,7 +139,7 @@
         }
 
         # RF10_CU10 - Obtener el Usuario por el código
-        public function getuser_bycode($userCode){
+        public function getUserByCode($userCode){
             try {
                 $sql = 'SELECT
                             r.rol_code,
@@ -166,7 +166,7 @@
         }
 
         # RF11_CU11 - Actualizar usuario
-        public function update_user(){
+        public function updateUser(){
             try {
                 $sql = 'UPDATE USERS SET
                             rol_code = :rolCode,
@@ -194,7 +194,7 @@
         }
 
         # RF12_CU12 - Eliminar Usuario
-        public function delete_user($userCode){
+        public function deleteUser($userCode){
             try {
                 $sql = 'DELETE FROM USERS WHERE user_code = :userCode';
                 $stmt = $this->dbh->prepare($sql);
@@ -206,3 +206,4 @@
         }
 
     }
+    
